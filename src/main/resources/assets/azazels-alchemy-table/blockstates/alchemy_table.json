@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "azazels-alchemy-table:block/alchemy_table",
+      "y": 90
+    },
+    "facing=east": {
+      "model": "azazels-alchemy-table:block/alchemy_table",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "azazels-alchemy-table:block/alchemy_table",
+      "y": 270
+    },
+    "facing=west": {
+      "model": "azazels-alchemy-table:block/alchemy_table"
+    }
+  }
+}

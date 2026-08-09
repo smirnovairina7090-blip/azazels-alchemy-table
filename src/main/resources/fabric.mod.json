@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "azazels-alchemy-table",
+  "version": "${version}",
+  "name": "Azazel's Alchemy Table",
+  "description": "An alchemy table that combines two ordinary potions into one potion with both effects.",
+  "authors": [
+    "Azazel"
+  ],
+  "contact": {},
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "ru.azazel.alchemytable.AzazelSAlchemyTable"
+    ],
+    "client": [
+      "ru.azazel.alchemytable.client.AzazelSAlchemyTableClient"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.16.14",
+    "minecraft": "~1.21.1",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}
