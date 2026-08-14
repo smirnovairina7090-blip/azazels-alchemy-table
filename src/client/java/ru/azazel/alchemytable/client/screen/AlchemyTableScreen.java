@@ -119,7 +119,73 @@ public class AlchemyTableScreen
                 TEXTURE_WIDTH,
                 TEXTURE_HEIGHT
         );
+        renderBrewProgress(
+                guiGraphics
+        );
     }
+        private void renderBrewProgress(
+        GuiGraphics guiGraphics
+) {
+
+    // Если процесс ещё не начался —
+    // ничего не рисуем.
+    if (this.menu.getBrewProgress() <= 0) {
+
+        return;
+    }
+
+
+    // Положение полоски внутри GUI.
+    int x =
+            this.leftPos + 62;
+
+    int y =
+            this.topPos + 20;
+
+
+    // Полная ширина полоски.
+    int width = 52;
+
+    // Высота.
+    int height = 4;
+
+
+    // ---------------------------------
+    // ФОН ПОЛОСКИ
+    // ---------------------------------
+
+    guiGraphics.fill(
+            x,
+            y,
+            x + width,
+            y + height,
+            0xFF777777
+    );
+
+
+    // ---------------------------------
+    // ТЕКУЩИЙ ПРОГРЕСС
+    // ---------------------------------
+
+    int progressWidth =
+            this.menu
+                    .getScaledBrewProgress(
+                            width
+                    );
+
+
+    // ---------------------------------
+    // ЗАПОЛНЕННАЯ ЧАСТЬ
+    // ---------------------------------
+
+    guiGraphics.fill(
+            x,
+            y,
+            x + progressWidth,
+            y + height,
+            0xFFA08AD4
+    );
+}
 
     @Override
     protected void renderLabels(
