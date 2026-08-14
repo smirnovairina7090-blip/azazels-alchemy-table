@@ -10,6 +10,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import ru.azazel.alchemytable.block.entity.AlchemyTableBlockEntity;
 
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
+
 public class AlchemyTableMenu extends AbstractContainerMenu {
 
     private static final int TABLE_SLOT_COUNT =
@@ -37,6 +40,7 @@ public class AlchemyTableMenu extends AbstractContainerMenu {
     private static final int SLOT_DISTANCE = 18;
 
     private final Container container;
+    private final ContainerData data;
 
     // Клиентский конструктор.
     public AlchemyTableMenu(
@@ -46,7 +50,8 @@ public class AlchemyTableMenu extends AbstractContainerMenu {
         this(
                 containerId,
                 playerInventory,
-                new SimpleContainer(AlchemyTableBlockEntity.CONTAINER_SIZE)
+                new SimpleContainer(AlchemyTableBlockEntity.CONTAINER_SIZE),
+                new SimpleContainerData(2)
         );
     }
 
@@ -54,7 +59,8 @@ public class AlchemyTableMenu extends AbstractContainerMenu {
     public AlchemyTableMenu(
             int containerId,
             Inventory playerInventory,
-            Container container
+            Container container,
+            ContainerData data
     ) {
         super(ModMenuTypes.ALCHEMY_TABLE_MENU, containerId);
 
@@ -64,6 +70,16 @@ public class AlchemyTableMenu extends AbstractContainerMenu {
         );
 
         this.container = container;
+        checkContainerDataCount(
+         data,
+         2
+        );
+        
+        this.data = data;
+        
+        this.addDataSlots(
+                data
+        );
         this.container.startOpen(playerInventory.player);
 
         addAlchemyTableSlots();
@@ -255,5 +271,39 @@ public class AlchemyTableMenu extends AbstractContainerMenu {
 
         sourceSlot.onTake(player, sourceStack);
         return originalStack;
+    }
+    public int getBrewProgress() {
+
+    return this.data.get(0);
+    }
+    
+    
+    public int getMaxBrewProgress() {
+    
+        return this.data.get(1);
+    }
+    
+    
+    public int getScaledBrewProgress(
+            int width
+    ) {
+    
+        int progress =
+                getBrewProgress();
+    
+        int maxProgress =
+                getMaxBrewProgress();
+    
+    
+        if (progress <= 0
+                || maxProgress <= 0) {
+    
+            return 0;
+        }
+    
+    
+        return progress
+                * width
+                / maxProgress;
     }
 }
