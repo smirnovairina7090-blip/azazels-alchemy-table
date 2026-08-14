@@ -22,6 +22,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import ru.azazel.alchemytable.menu.AlchemyTableMenu;
 import net.minecraft.world.inventory.ContainerData;
 
+
 public class AlchemyTableBlockEntity
         extends BlockEntity
         implements Container, MenuProvider {
@@ -67,9 +68,9 @@ public class AlchemyTableBlockEntity
      */
     private int brewProgress = 0;
 
-    private final ContainerData data =
-         new ContainerData() {
-                             @Override
+        private final ContainerData data =
+                new ContainerData() {
+                        @Override
             public int get(int index) {
 
                 return switch (index) {
@@ -101,8 +102,9 @@ public class AlchemyTableBlockEntity
 
                 return 2;
             }
+                };
 
-         }
+
     // =========================================================
     // ВНУТРЕННИЙ ИНВЕНТАРЬ
     // =========================================================
@@ -821,4 +823,3 @@ public class AlchemyTableBlockEntity
                 );
     }
 }
-
