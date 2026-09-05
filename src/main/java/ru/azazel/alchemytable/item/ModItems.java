@@ -15,10 +15,19 @@ public final class ModItems {
             new Item(new Item.Properties().stacksTo(1))
     );
 
+    public static final Item LIGHT_MAGIC_WAND = Registry.register(
+            BuiltInRegistries.ITEM,
+            AzazelSAlchemyTable.id("light_magic_wand"),
+            new ChargedMagicWandItem(new Item.Properties().stacksTo(1))
+    );
+
     public static void registerModItems() {
         ItemGroupEvents.modifyEntriesEvent(
                 CreativeModeTabs.TOOLS_AND_UTILITIES
-        ).register(entries -> entries.accept(MAGIC_WAND));
+        ).register(entries -> {
+            entries.accept(MAGIC_WAND);
+            entries.accept(LIGHT_MAGIC_WAND);
+        });
     }
 
     private ModItems() {
