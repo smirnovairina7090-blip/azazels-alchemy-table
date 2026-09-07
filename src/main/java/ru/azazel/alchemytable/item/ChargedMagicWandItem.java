@@ -9,8 +9,6 @@ public class ChargedMagicWandItem extends Item {
         super(properties);
     }
 
-    @Override
-    public boolean isFoil(ItemStack stack) {
-        return true;
-    }
 }
+
+

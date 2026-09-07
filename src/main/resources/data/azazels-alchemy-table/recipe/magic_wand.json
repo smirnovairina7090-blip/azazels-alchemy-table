@@ -1,28 +1,32 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
+
   "pattern": [
-    "G A",
-    "GDG",
-    "SG "
+    " AB",
+    "ACA",
+    "DA "
   ],
+
   "key": {
-    "G": {
+    "A": {
       "item": "minecraft:glowstone_dust"
     },
-    "A": {
+    "B": {
       "item": "minecraft:amethyst_shard"
     },
-    "D": {
+    "C": {
       "item": "minecraft:diamond"
     },
-    "S": {
+    "D": {
       "item": "minecraft:stick"
     }
   },
+
   "result": {
     "id": "azazels-alchemy-table:magic_wand",
     "count": 1
   },
+
   "show_notification": true
 }

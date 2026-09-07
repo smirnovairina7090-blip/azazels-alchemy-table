@@ -1,7 +1,7 @@
 {
   "block.azazels-alchemy-table.alchemy_table": "Алхимический стол",
   "container.azazels-alchemy-table.alchemy_table": "Алхимический стол",
-  "item.azazels-alchemy-table.double_potion": "Двойное зелье Азазеля",
+  "item.azazels-alchemy-table.double_potion": "Двойное зелье",
   "item.azazels-alchemy-table.magic_wand": "Волшебная палочка",
-  "item.azazels-alchemy-table.light_magic_wand": "Волшебная палочка: световой заряд"
+  "item.azazels-alchemy-table.light_magic_wand": "Волшебная палочка"
 }

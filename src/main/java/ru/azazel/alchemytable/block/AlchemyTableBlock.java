@@ -16,8 +16,6 @@ import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -26,6 +24,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import ru.azazel.alchemytable.block.entity.AlchemyTableBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import ru.azazel.alchemytable.block.entity.ModBlockEntities;
 
 public class AlchemyTableBlock extends Block implements EntityBlock {
@@ -54,39 +54,37 @@ public class AlchemyTableBlock extends Block implements EntityBlock {
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new AlchemyTableBlockEntity(pos, state);
     }
-
-    /**
-     * Подключает игровой tick к BlockEntity алхимического стола.
-     * Без этого AlchemyTableBlockEntity.tick(...) существует,
-     * но Minecraft его никогда не вызывает, поэтому brewProgress
-     * остаётся равным нулю и смешивание не запускается.
-     */
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
-            Level level,
-            BlockState state,
-            BlockEntityType<T> type
-    ) {
-        if (type != ModBlockEntities.ALCHEMY_TABLE_BLOCK_ENTITY) {
-            return null;
-        }
+public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+        Level level,
+        BlockState state,
+        BlockEntityType<T> type
+) {
 
-        return (
-                tickerLevel,
-                tickerPos,
-                tickerState,
-                blockEntity
-        ) -> {
-            if (blockEntity instanceof AlchemyTableBlockEntity alchemyTable) {
-                AlchemyTableBlockEntity.tick(
-                        tickerLevel,
-                        tickerPos,
-                        tickerState,
-                        alchemyTable
-                );
-            }
-        };
+    // Этот ticker предназначен только
+    // для нашего алхимического стола.
+    if (type != ModBlockEntities.ALCHEMY_TABLE_BLOCK_ENTITY) {
+        return null;
     }
+
+    return (
+            tickerLevel,
+            tickerPos,
+            tickerState,
+            blockEntity
+    ) -> {
+
+        if (blockEntity instanceof AlchemyTableBlockEntity table) {
+
+            AlchemyTableBlockEntity.tick(
+                    tickerLevel,
+                    tickerPos,
+                    tickerState,
+                    table
+            );
+        }
+    };
+}
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
