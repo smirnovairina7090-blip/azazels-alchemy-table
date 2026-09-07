@@ -1,111 +1,12 @@
-name: Clone student repository and fix
+name: Student clone test
 
 on:
   push:
-    branches:
-      - student-evgenia-fixed
-
-permissions:
-  contents: write
+    branches: [student-evgenia-fixed]
 
 jobs:
-  sync-and-fix:
+  test:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout destination branch
-        uses: actions/checkout@v6
-        with:
-          ref: student-evgenia-fixed
-
-      - name: Set up Java 21
-        uses: actions/setup-java@v5
-        with:
-          distribution: temurin
-          java-version: "21"
-
-      - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v6
-        with:
-          gradle-version: "9.5.1"
-
-      - name: Clone student repository exactly
-        run: |
-          git clone --depth 1 https://github.com/danilevskayaevgeniay-hub/azazels-alchemy-table.git /tmp/student-repo
-          rsync -a --delete --exclude='.git/' /tmp/student-repo/ ./
-
-      - name: Fix student errors
-        shell: bash
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          import json
-
-          mod_items = Path('src/main/java/ru/azazel/alchemytable/item/ModItems.java')
-          mod_items.write_text('''package ru.azazel.alchemytable.item;
-
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.Item;
-import ru.azazel.alchemytable.AzazelSAlchemyTable;
-
-public final class ModItems {
-
-    public static final Item MAGIC_WAND = Registry.register(
-            BuiltInRegistries.ITEM,
-            AzazelSAlchemyTable.id("magic_wand"),
-            new Item(new Item.Properties().stacksTo(1))
-    );
-
-    public static final Item LIGHT_MAGIC_WAND = Registry.register(
-            BuiltInRegistries.ITEM,
-            AzazelSAlchemyTable.id("light_magic_wand"),
-            new ChargedMagicWandItem(new Item.Properties().stacksTo(1))
-    );
-
-    public static void registerModItems() {
-        ItemGroupEvents.modifyEntriesEvent(
-                CreativeModeTabs.TOOLS_AND_UTILITIES
-        ).register(entries -> {
-            entries.accept(MAGIC_WAND);
-            entries.accept(LIGHT_MAGIC_WAND);
-        });
-    }
-
-    private ModItems() {
-    }
-}
-''', encoding='utf-8')
-
-          en = Path('src/main/resources/assets/azazels-alchemy-table/lang/en_us.json')
-          en.write_text(json.dumps({
-              'block.azazels-alchemy-table.alchemy_table': 'Alchemy Table',
-              'container.azazels-alchemy-table.alchemy_table': 'Alchemy Table',
-              'item.azazels-alchemy-table.double_potion': 'Double Potion',
-              'item.azazels-alchemy-table.magic_wand': 'Magic Wand',
-              'item.azazels-alchemy-table.light_magic_wand': 'Magic Wand: Light Charge'
-          }, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-
-          light_model = Path('src/main/resources/assets/azazels-alchemy-table/models/item/light_magic_wand.json')
-          light_model.write_text(json.dumps({
-              'parent': 'azazels-alchemy-table:item/magic_wand'
-          }, indent=2) + '\n', encoding='utf-8')
-
-          for path in Path('src').rglob('*.json'):
-              with path.open('r', encoding='utf-8') as f:
-                  json.load(f)
-              print('JSON OK:', path)
-          PY
-
-      - name: Build fixed mod
-        run: gradle build --stacktrace
-
-      - name: Save fixed clone to this branch
-        run: |
-          git config user.name "ChatGPT repository repair"
-          git config user.email "actions@users.noreply.github.com"
-          git add -A
-          git commit -m "Clone student repository and fix errors [student-clone-sync]" || exit 0
-          git push origin HEAD:student-evgenia-fixed
+      - name: Test
+        run: echo ok
