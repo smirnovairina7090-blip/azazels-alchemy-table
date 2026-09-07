@@ -10,7 +10,6 @@ permissions:
 
 jobs:
   sync-and-fix:
-    if: ${{ !contains(github.event.head_commit.message, '[student-clone-sync]') }}
     runs-on: ubuntu-latest
 
     steps:
@@ -30,12 +29,12 @@ jobs:
         with:
           gradle-version: "9.5.1"
 
-      - name: Clone student's repository exactly
+      - name: Clone student repository exactly
         run: |
           git clone --depth 1 https://github.com/danilevskayaevgeniay-hub/azazels-alchemy-table.git /tmp/student-repo
           rsync -a --delete --exclude='.git/' /tmp/student-repo/ ./
 
-      - name: Fix student's errors
+      - name: Fix student errors
         shell: bash
         run: |
           python - <<'PY'
@@ -94,7 +93,6 @@ public final class ModItems {
               'parent': 'azazels-alchemy-table:item/magic_wand'
           }, indent=2) + '\n', encoding='utf-8')
 
-          # Validate every JSON resource before building.
           for path in Path('src').rglob('*.json'):
               with path.open('r', encoding='utf-8') as f:
                   json.load(f)
